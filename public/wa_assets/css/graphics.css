@@ -1,0 +1,219 @@
+img.icon
+{
+    height: 16px;
+    width: 16px;
+    cursor: pointer;      
+}
+img.folder
+{
+    height: 16px;
+    width: 16px;
+    background: url('../images/icons/16x16/folder.png') center center no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.folder24
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/24x24/folder.png') center center no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.spreadsheet
+{
+    height: 16px;
+    width: 16px;
+    background: url('../images/icons/16x16/spreadsheet.png') center center no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.document
+{
+    height: 16px;
+    width: 16px;
+    background: url('../images/icons/16x16/document.png') center center no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.delete
+{
+    background: url('../images/icons/16x16/delete.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    margin: 2px;
+}
+img.tick
+{
+    background: url('../images/icons/16x16/tick.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+img.exclamation
+{
+    background: url('../images/icons/16x16/exclamation.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+img.critical
+{
+    background: url('../images/icons/16x16/critical.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+img.edit
+{
+    background: url('../images/icons/16x16/edit.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    margin: 2px;
+}
+img.pdf
+{
+    background: url('../images/icons/16x16/pdf-32.png') center center no-repeat;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    margin: 2px;
+}
+img.print
+{
+    background: url('../images/icons/16x16/print.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+img.attachments
+{
+    background: url('../images/icons/16x16/attachment.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;      
+}
+img.view
+{
+    background: url('../images/icons/16x16/view.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;      
+}
+img.flagged_mail
+{
+    background: url('../images/icons/16x16/star.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;      
+}
+img.invoice
+{
+    background: url('../images/icons/16x16/invoice.png') center center no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+img.maybeflagged
+{
+    height: 16px;
+    width: 16px;
+    cursor: pointer;      
+}
+
+img.firstpage
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') 0px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.prevpage
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -24px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.nextpage
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -48px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.lastpage
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -72px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+
+img.firstpage_disabled
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -96px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.prevpage_disabled
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -120px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.nextpage_disabled
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -144px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.lastpage_disabled
+{
+    height: 24px;
+    width: 24px;
+    background: url('../images/icons/navigation_controls_24.png') -168px 0px no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+img.loader
+{
+    height: 16px;
+    width: 16px;
+    background: url('../images/icons/basic-loader.gif') center center no-repeat;
+    cursor: pointer;      
+    vertical-align: middle;
+}
+
+img.current {
+    background: url('../images/icons/16x16/current.png') no-repeat scroll center center transparent;
+    height: 16px;
+    width: 16px;
+}
+img.previous {
+    background: url('../images/icons/16x16/current.png') no-repeat scroll center center transparent;
+    height: 16px;
+    width: 16px;
+}
+img.next {
+    background: url('../images/icons/16x16/next.png') no-repeat scroll center center transparent;
+    height: 16px;
+    width: 16px;
+}
+img.disable {
+    background: url('../images/icons/16x16/disable.png') no-repeat scroll center center transparent;
+    height: 16px;
+    width: 16px;
+}

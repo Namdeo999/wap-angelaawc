@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user_login');
 });
+
+Route::get('/admin', [AdminController::class, 'index']);
+Route::post('admin/auth', [AdminController::class, 'adminAuth']);
+Route::get('admin/dashboard', [DashboardController::class, 'index']);
+
+
+
+
+//Route::get('login', [UserController::class, 'index']);
+//Route::post('user-auth', [UserController::class, 'userAuth']);
+
+
+
+
