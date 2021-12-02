@@ -23,9 +23,14 @@ Route::get('/', function () {
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('admin/auth', [AdminController::class, 'adminAuth']);
-Route::get('admin/dashboard', [DashboardController::class, 'index']);
+
+Route::group(['middleware'=>'admin_auth'], function(){
+    Route::get('admin/dashboard', [DashboardController::class, 'index']);
+    Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
 
 
+    Route::get('admin/logout', [AdminController::class, 'logout']);
+});
 
 
 //Route::get('login', [UserController::class, 'index']);

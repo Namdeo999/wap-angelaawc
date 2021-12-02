@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 
 class AdminController extends Controller
 {
     public function index(Request $req)
     {
-        // if($req->session()->has('ADMIN_LOGIN'))
-        // {
-        //     return redirect('admin/dashboard');
-        // }else{
-        //     return view('admin.login');
-        // }
-
-        $admin = Admin::all();
-        echo $admin; 
-        return view('admin.login',[
-            'admin'=>$admin
-        ]);
+        if($req->session()->has('ADMIN_LOGIN'))
+        {
+            return redirect('admin/dashboard');
+        }else{
+            return view('admin.login');
+        }
+        return view('admin.login');
     }
 
     public function adminAuth(Request $req)
@@ -46,5 +43,21 @@ class AdminController extends Controller
             $req->session()->flash('error','Please enter valid login details');
             return redirect('/admin');
         }
+    }
+
+    public function wapAdmin()
+    {
+        return view('admin.wap_admin');
+    }
+
+
+    public function logout(Request $req)
+    {
+        session()->forget('ADMIN_LOGIN');
+        session()->forget('ADMIN_ID');
+        session()->forget('ADMIN_NAME');
+        session()->forget('ADMIN_ROLE');
+        session()->flash('msg','Logout successfully'); 
+        return redirect('/admin');
     }
 }

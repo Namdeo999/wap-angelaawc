@@ -15,6 +15,13 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
+        if($request->session()->has('ADMIN_LOGIN'))
+        {
+           
+        }else{
+            $request->session()->flash('msg','Access denied');
+            return redirect('/admin');
+        }
         return $next($request);
     }
 }
