@@ -1,7 +1,7 @@
 
 <div class="p-3">
 
-    <h5>Customize SDPL Admin</h5><hr class="mb-2"/>
+    <h5>Customize Wap Admin</h5><hr class="mb-2"/>
 
     <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" role="switch" id="enable_mode" value="1">Enable Dark mode

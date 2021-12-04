@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use Validator;
 
 class AdminController extends Controller
 {
@@ -47,7 +48,41 @@ class AdminController extends Controller
 
     public function wapAdmin()
     {
-        return view('admin.wap_admin');
+        $admins = Admin::all();
+        return view('admin.wap_admin', [
+            'admins'=>$admins
+        ]);
+    }
+
+    public function saveAdmin(Request $req)
+    {
+        $validator = Validator::make($req->all(),[
+            'name' => 'required|max:191',
+            'email' => 'required|unique:admins,email,'.$req->input('email'),
+            'password' => 'required|max:191',
+        ]);
+        if($validator->fails())
+        {
+            return response()->json([
+                'status'=>400,
+                'errors'=>$validator->messages(),
+            ]);
+        }else{
+
+            $model = new Admin ;
+            $model->role = $req->input('admin_role');
+            $model->name = ucwords($req->input('name'));
+            $model->email = $req->input('email');
+            $model->password = Hash::make($req->input('password'));
+            $model->save();
+            
+            return response()->json([
+                'status'=>200
+            ]);
+            
+            // $data = "ok";
+            // return $data;
+        }
     }
 
 

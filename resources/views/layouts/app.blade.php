@@ -22,24 +22,26 @@
   <link rel="stylesheet" href="{{asset('public/wa_assets/css/style.css')}}">
   
   <!-- JS only -->
-  {{-- <script src="{{asset('public/sdpl_assets/js/jquery-3.6.0.js')}}" ></script> --}}
   <script src="{{asset('public/wa_assets/js/jquery-3.6.0.min.js')}}" ></script>
+  {{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+  
   <script src="{{asset('public/wa_assets/js/popper.min.js')}}" ></script>
-  <!-- JavaScript Bundle with Popper -->
   <script src="{{asset('public/wa_assets/js/bootstrap.bundle.min.js')}}" ></script>
   
 
   <script src="{{asset('public/wa_assets/admin/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
   <script src="{{asset('public/wa_assets/admin/js/adminlte.js')}}"></script>
 
-  <script src="{{asset('public/wa_assets/admin/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
+  {{-- <script src="{{asset('public/wa_assets/admin/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
   <script src="{{asset('public/wa_assets/admin/raphael/raphael.min.js')}}"></script>
   <script src="{{asset('public/wa_assets/admin/jquery-mapael/jquery.mapael.min.js')}}"></script>
   <script src="{{asset('public/wa_assets/admin/jquery-mapael/maps/usa_states.min.js')}}"></script>
-  <script src="{{asset('public/wa_assets/admin/chart.js/Chart.min.js')}}"></script>
+  <script src="{{asset('public/wa_assets/admin/chart.js/Chart.min.js')}}"></script> --}}
 
   <script src="{{asset('public/wa_assets/js/head.js')}}" ></script>
   <script src="{{asset('public/wa_assets/js/master.js')}}" ></script>
+
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
