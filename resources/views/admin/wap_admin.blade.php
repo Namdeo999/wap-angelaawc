@@ -115,10 +115,10 @@
                             @foreach ($admins as $item)
                                 <tr>
                                     <td>{{++$count}}</td>
-                                    @if ($item->role == MyApp::ADMINISTRATOR)
-                                        <td>{{'ADMINISTRATOR'}}</td>
+                                    @if ($item->admin_role == MyApp::ADMINISTRATOR)
+                                        <td>{{'Administrator'}}</td>
                                         @else
-                                        <td>{{'MANAGER'}}</td>
+                                        <td>{{'Manager'}}</td>
                                     @endif
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->email}}</td>
@@ -154,87 +154,38 @@
 
             $(document).on('click','#saveAdminBtn', function (e) {
                 e.preventDefault();
-                // var formData = new FormData($("#adminForm")[0]);
-
-                // fetch('save-admin', {
-                // method: 'POST',
-                // body: JSON.stringify(formData),
-                // headers: {
-                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     },
-                // })
-                // .then((response) => response.json())
-                // .then((data) => console.log(data));
                 saveAdmin();
             });
             
-            // $(document).on('click','.editStateBtn', function (e) {
-            //     e.preventDefault();
-            //     const state_id = $(this).val();
-            //     editState(state_id);
-            // });
+            $(document).on('click','.editAdminBtn', function (e) {
+                e.preventDefault();
+                const admin_id = $(this).val();
+                editAdmin(admin_id);
+            });
 
-            // $(document).on('click','#updateStateBtn', function (e) {
-            //     e.preventDefault();
-            //     const state_id = $(this).val();
-            //     updateState(state_id);
-            // });
+            $(document).on('click','#updateAdminBtn', function (e) {
+                e.preventDefault();
+                const admin_id = $(this).val();
+                updateAdmin(admin_id);
+            });
             
-            // $(document).on('click','.deleteStateBtn', function (e) {
-            //     e.preventDefault();
-            //     const state_id = $(this).val();
-            //     $('#deleteStateModal').modal('show');
-            //     $('#yesDeleteStateBtn').val(state_id);
-            // });
+            $(document).on('click','.deleteAdminBtn', function (e) {
+                e.preventDefault();
+                const admin_id = $(this).val();
+                $('#deleteAdminModal').modal('show');
+                $('#yesDeleteAdminBtn').val(admin_id);
+            });
 
-            // $(document).on('click','#yesDeleteStateBtn', function (e) {
-            //     e.preventDefault();
-            //     const state_id = $(this).val();
-            //     deleteState(state_id);
-            // });
+            $(document).on('click','#yesDeleteAdminBtn', function (e) {
+                e.preventDefault();
+                const admin_id = $(this).val();
+                deleteAdmin(admin_id);
+            });
 
 
         });
 
-        function saveAdmin(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            
-            var formData = new FormData($("#adminForm")[0]);
-            $.ajax({
-                type: "POST",
-                url: "save-admin",
-                data: formData,
-                dataType: "json",
-                cache: false,
-                contentType: false, 
-                processData: false, 
-                success: function (response) {
-                    console.log(response.status);
-                    if(response.status == 400)
-                    {
-                        $('#admin_err').html('');
-                        $('#admin_err').addClass('alert alert-danger');
-                        var count = 1;
-                        $.each(response.errors, function (key, err_value) { 
-                            $('#admin_err').append('<span>' + count++ +'. '+ err_value+'</span></br>');
-                        });
-
-                    }else{
-                        $('#admin_err').html('');
-                        $('#adminModal').modal('hide');
-                        window.location.reload();
-                    }
-                }
-                // error: function (xhr) {
-                //     console.log(xhr.responseText);
-                // }
-            });
-            
-        }
+        
         
     </script>
 @endsection

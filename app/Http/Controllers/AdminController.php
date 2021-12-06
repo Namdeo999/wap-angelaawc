@@ -70,7 +70,7 @@ class AdminController extends Controller
         }else{
 
             $model = new Admin ;
-            $model->role = $req->input('admin_role');
+            $model->admin_role = $req->input('admin_role');
             $model->name = ucwords($req->input('name'));
             $model->email = $req->input('email');
             $model->password = Hash::make($req->input('password'));
@@ -79,11 +79,57 @@ class AdminController extends Controller
             return response()->json([
                 'status'=>200
             ]);
-            
-            // $data = "ok";
-            // return $data;
         }
     }
+
+    public function editAdmin($admin_id)
+    {
+        $admin = Admin::find($admin_id);
+        return response()->json([
+            'status'=>200,
+            'admin'=>$admin
+        ]);
+    }
+
+    public function updateAdmin(Request $req, $admin_id)
+    {
+        $validator = Validator::make($req->all(),[
+            'name' => 'required|max:191',
+            'email' => 'required|unique:admins,email,'.$admin_id,
+        ]);
+        if($validator->fails())
+        {
+            return response()->json([
+                'status'=>400,
+                'errors'=>$validator->messages(),
+            ]);
+        }else{
+
+            $model = Admin::find($admin_id) ;
+            $model->admin_role = $req->input('admin_role');
+            $model->name = ucwords($req->input('name'));
+            $model->email = $req->input('email');
+            if(!empty($req->input('password'))){
+                $model->password = Hash::make($req->input('password'));
+            }
+            $model->save();
+            return response()->json([
+                'status'=>200
+            ]);
+        }
+    }
+
+    public function deleteAdmin($admin_id)
+    {
+        $model = Admin::find($admin_id); 
+        $model->delete();
+        return response()->json([
+            'status'=>200,
+        ]);
+    }
+
+
+
 
 
     public function logout(Request $req)

@@ -70,7 +70,7 @@
                 </ul>
             </li>
             <li class="nav-item ">
-                <a href="{{url('/admin')}}" class="nav-link">
+                <a href="{{url('admin/wap-user')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Users</p>
                 </a>

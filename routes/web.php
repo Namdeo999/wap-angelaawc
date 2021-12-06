@@ -29,6 +29,16 @@ Route::group(['middleware'=>'admin_auth'], function(){
 
     Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
     Route::post('admin/save-admin', [AdminController::class, 'saveAdmin']);
+    Route::get('admin/edit-admin/{admin_id}', [AdminController::class, 'editAdmin']);
+    Route::post('admin/update-admin/{admin_id}', [AdminController::class, 'updateAdmin']);
+    Route::get('admin/delete-admin/{admin_id}', [AdminController::class, 'deleteAdmin']);
+
+    Route::get('admin/wap-user', [UserController::class, 'index']);
+    Route::post('admin/save-user', [UserController::class, 'saveUser']);
+    Route::get('admin/edit-user/{user_id}', [UserController::class, 'editUser']);
+    Route::post('admin/update-user/{user_id}', [UserController::class, 'updateUser']);
+    Route::get('admin/delete-user/{user_id}', [UserController::class, 'deleteUser']);
+
 
 
 
