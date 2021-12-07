@@ -34,7 +34,7 @@ class AdminController extends Controller
                 $req->session()->put('ADMIN_LOGIN', true);
                 $req->session()->put('ADMIN_ID', $result->id);
                 $req->session()->put('ADMIN_NAME', $result->name);
-                $req->session()->put('ADMIN_ROLE', $result->role);
+                $req->session()->put('ADMIN_ROLE', $result->admin_role);
                 return redirect('/admin/dashboard');
             }else{
                 $req->session()->flash('error','Please enter valid password');

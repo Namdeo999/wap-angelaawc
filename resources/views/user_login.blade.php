@@ -27,7 +27,7 @@
                         </div>
                     @endif    
                     
-                    <form action="{{url('user-auth')}}" method="post">
+                    <form action="{{url('auth')}}" method="post">
                         @csrf
                         <div class="input-group mb-3">
                             <input type="email" name="email" class="form-control form-control-sm" placeholder="Email">

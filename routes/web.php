@@ -17,9 +17,9 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('user_login');
-});
+// Route::get('/', function () {
+//     return view('user_login');
+// });
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('admin/auth', [AdminController::class, 'adminAuth']);
@@ -33,7 +33,7 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/update-admin/{admin_id}', [AdminController::class, 'updateAdmin']);
     Route::get('admin/delete-admin/{admin_id}', [AdminController::class, 'deleteAdmin']);
 
-    Route::get('admin/wap-user', [UserController::class, 'index']);
+    Route::get('admin/wap-user', [UserController::class, 'wapUser']);
     Route::post('admin/save-user', [UserController::class, 'saveUser']);
     Route::get('admin/edit-user/{user_id}', [UserController::class, 'editUser']);
     Route::post('admin/update-user/{user_id}', [UserController::class, 'updateUser']);
@@ -44,6 +44,20 @@ Route::group(['middleware'=>'admin_auth'], function(){
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
 });
+
+
+
+Route::get('/', [UserController::class, 'index']);
+Route::post('/auth', [UserController::class, 'userAuth']);
+Route::group(['middleware'=>'user_auth'], function(){
+    Route::get('/dashboard', [DashboardController::class, 'userDashboard']);
+
+
+
+    Route::get('/user-logout', [UserController::class, 'userLogout']);
+
+});
+
 
 //Route::get('login', [UserController::class, 'index']);
 //Route::post('user-auth', [UserController::class, 'userAuth']);

@@ -11,21 +11,48 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    
-    public function userAuth(Request $req)
+    public function index(Request $req)
     {
-        
- 
+        if($req->session()->has('USER_LOGIN'))
+        {
+            return redirect('/dashboard');
+        }else{
+            return view('user_login');
+        }
+        return view('user_login');
     }
 
-    public function index(Request $req)
+    public function wapUser(Request $req)
     {
         $users = User::all();
         return view('admin.user', [
             'users'=>$users
         ]);
 
-        //return view('admin.user');
+    }
+    public function userAuth(Request $req)
+    {
+        $email = $req->input('email');
+        $password = $req->input('password');
+
+        $result = User::where(['email'=>$email])->first();
+        if($result)
+        {
+            if(Hash::check($req->input('password'),$result->password))
+            {
+                $req->session()->put('USER_LOGIN', true);
+                $req->session()->put('USER_ID', $result->id);
+                $req->session()->put('USER_NAME', $result->user_name);
+                return redirect('/dashboard');
+            }else{
+                $req->session()->flash('error','Please enter valid password');
+                return redirect('/');
+            }
+        }else{
+            $req->session()->flash('error','Please enter valid login details');
+            return redirect('/');
+        }
+ 
     }
 
     public function saveUser(Request $req)
@@ -103,6 +130,17 @@ class UserController extends Controller
         return response()->json([
             'status'=>200,
         ]);
+    }
+
+
+
+    public function userLogout(Request $req)
+    {
+        session()->forget('USER_LOGIN');
+        session()->forget('USER_ID');
+        session()->forget('USER_NAME');
+        session()->flash('msg','Logout successfully'); 
+        return redirect('/');
     }
 
 }

@@ -10,4 +10,10 @@ class DashboardController extends Controller
     {
         return view('admin/dashboard');
     }
+
+    //user dashboard
+    public function userDashboard(Request $req)
+    {
+        return view('/dashboard');
+    }
 }
