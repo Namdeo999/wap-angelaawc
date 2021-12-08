@@ -220,3 +220,40 @@ function deleteUser(user_id) {
         }
     });
 }
+
+//template operations
+
+function saveTemplate(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    var formData = new FormData($("#templateForm")[0]);
+    $.ajax({
+        type: "POST",
+        url: "save-template",
+        data: formData,
+        dataType: "json",
+        cache: false,
+        contentType: false, 
+        processData: false, 
+        success: function (response) {
+            if(response.status == 400)
+            {
+                $('#template_err').html('');
+                $('#template_err').addClass('alert alert-danger');
+                var count = 1;
+                $.each(response.errors, function (key, err_value) { 
+                    $('#template_err').append('<span>' + count++ +'. '+ err_value+'</span></br>');
+                });
+
+            }else{
+                $('#template_err').html('');
+                $('#templateModal').modal('hide');
+                window.location.reload();
+            }
+        }
+    });
+}

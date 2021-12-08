@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TemplateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,8 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/update-user/{user_id}', [UserController::class, 'updateUser']);
     Route::get('admin/delete-user/{user_id}', [UserController::class, 'deleteUser']);
 
-
+    Route::get('admin/template', [TemplateController::class, 'index']);
+    Route::post('admin/save-template', [TemplateController::class, 'saveTemplate']);
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
