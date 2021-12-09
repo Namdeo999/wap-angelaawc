@@ -79,6 +79,18 @@
                     </a>
                 </li>
             @else
+                <li class="nav-item menu-open">
+                    <a href="{{url('/dashboard')}}" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{url('/wap-request')}}" class="nav-link">
+                        <i class="fas fa-share-square"></i>
+                        <p>Wap Request</p>
+                    </a>
+                </li>
                 
             @endif
             

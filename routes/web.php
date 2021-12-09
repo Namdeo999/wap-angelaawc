@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\WapRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::group(['middleware'=>'admin_auth'], function(){
 
     Route::get('admin/template', [TemplateController::class, 'index']);
     Route::post('admin/save-template', [TemplateController::class, 'saveTemplate']);
+    Route::get('admin/template-status/{status}/{id}', [TemplateController::class, 'templateStatus']);
+    Route::get('admin/edit-template/{template_id}', [TemplateController::class, 'editTemplate']);
+    Route::post('admin/update-template/{template_id}', [TemplateController::class, 'updateTemplate']);
+    Route::get('admin/delete-template/{template_id}', [TemplateController::class, 'deleteTemplate']);
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
@@ -54,10 +59,11 @@ Route::post('/auth', [UserController::class, 'userAuth']);
 Route::group(['middleware'=>'user_auth'], function(){
     Route::get('/dashboard', [DashboardController::class, 'userDashboard']);
 
+    Route::get('/wap-request', [WapRequestController::class, 'index']);
+
 
 
     Route::get('/user-logout', [UserController::class, 'userLogout']);
-
 });
 
 

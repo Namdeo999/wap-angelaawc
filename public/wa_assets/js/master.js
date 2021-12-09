@@ -157,7 +157,7 @@ function editUser(user_id){
             if(response.status == 200){
                 $('#userModal').modal('show');
                 $('#user_err').html('');
-                $('usern_err').removeClass('alert alert-danger');
+                $('#user_err').removeClass('alert alert-danger');
                 $("#userForm").trigger( "reset" ); 
                 $('#saveUserBtn').addClass('hide');
                 $('#updateUserBtn').removeClass('hide');
@@ -252,6 +252,75 @@ function saveTemplate(){
             }else{
                 $('#template_err').html('');
                 $('#templateModal').modal('hide');
+                window.location.reload();
+            }
+        }
+    });
+}
+
+function editTemplate(template_id){
+    $.ajax({
+        type: "get",
+        url: "edit-template/"+template_id,
+        dataType: "json",
+        success: function (response) {
+            if(response.status == 200){
+                $('#templateModal').modal('show');
+                $('#template_err').html('');
+                $('#template_err').removeClass('alert alert-danger');
+                $("#templateForm").trigger( "reset" ); 
+                $('#saveTemplateBtn').addClass('hide');
+                $('#updateTemplateBtn').removeClass('hide');
+                $('#template_name').val(response.template.template_name);
+                $('#template_content').val(response.template.template_content);
+                $('#updateTemplateBtn').val(response.template.id);
+            }
+        }
+    });
+}
+
+function updateTemplate(template_id){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    var formData = new FormData($("#templateForm")[0]);
+    $.ajax({
+        type: "POST",
+        url: "update-template/"+template_id,
+        data: formData,
+        dataType: "json",
+        cache: false,
+        contentType: false, 
+        processData: false, 
+        success: function (response) {
+            if(response.status == 400)
+            {
+                $('#template_err').html('');
+                $('#template_err').addClass('alert alert-danger');
+                var count = 1;
+                $.each(response.errors, function (key, err_value) { 
+                    $('#template_err').append('<span>' + count++ +'. '+ err_value+'</span></br>');
+                });
+
+            }else{
+                $('#template_err').html('');
+                $('#templateModal').modal('hide');
+                window.location.reload();
+            }
+        }
+    });
+}
+
+function deleteTemplate(template_id) {
+    $.ajax({
+        type: "get",
+        url: "delete-template/"+template_id,
+        dataType: "json",
+        success: function (response) {
+            if(response.status == 200){
                 window.location.reload();
             }
         }

@@ -36,6 +36,26 @@
             </div>
         </div>
     </div>
+
+    {{-- delete modal --}}
+    <div class="modal fade" id="deleteTemplateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Delete Template </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+                    <center>
+                        <h5>Are you sure?</h5>
+                            <button type="button" id="yesDeleteTemplateBtn" class="btn btn-primary btn-sm mx-1 ">Yes</button>
+                            <button type="button" class="btn btn-secondary mx-1 btn-sm" data-bs-dismiss="modal">No</button>
+                        <hr>
+                    </center>
+                </div>
+        </div>
+        </div>
+    </div>
   
     <div>
         <div class="row ">
@@ -113,30 +133,30 @@
                 saveTemplate();
             });
             
-            // $(document).on('click','.editAdminBtn', function (e) {
-            //     e.preventDefault();
-            //     const admin_id = $(this).val();
-            //     editAdmin(admin_id);
-            // });
+            $(document).on('click','.editTemplateBtn', function (e) {
+                e.preventDefault();
+                const template_id = $(this).val();
+                editTemplate(template_id);
+            });
 
-            // $(document).on('click','#updateAdminBtn', function (e) {
-            //     e.preventDefault();
-            //     const admin_id = $(this).val();
-            //     updateAdmin(admin_id);
-            // });
+            $(document).on('click','#updateTemplateBtn', function (e) {
+                e.preventDefault();
+                const template_id = $(this).val();
+                updateTemplate(template_id);
+            });
             
-            // $(document).on('click','.deleteAdminBtn', function (e) {
-            //     e.preventDefault();
-            //     const admin_id = $(this).val();
-            //     $('#deleteAdminModal').modal('show');
-            //     $('#yesDeleteAdminBtn').val(admin_id);
-            // });
+            $(document).on('click','.deleteTemplateBtn', function (e) {
+                e.preventDefault();
+                const template_id = $(this).val();
+                $('#deleteTemplateModal').modal('show');
+                $('#yesDeleteTemplateBtn').val(template_id);
+            });
 
-            // $(document).on('click','#yesDeleteAdminBtn', function (e) {
-            //     e.preventDefault();
-            //     const admin_id = $(this).val();
-            //     deleteAdmin(admin_id);
-            // });
+            $(document).on('click','#yesDeleteTemplateBtn', function (e) {
+                e.preventDefault();
+                const template_id = $(this).val();
+                deleteTemplate(template_id);
+            });
 
 
         });
