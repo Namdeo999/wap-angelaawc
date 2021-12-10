@@ -60,6 +60,8 @@ Route::group(['middleware'=>'user_auth'], function(){
     Route::get('/dashboard', [DashboardController::class, 'userDashboard']);
 
     Route::get('/wap-request', [WapRequestController::class, 'index']);
+    Route::get('/get-template-content/{template_id}', [WapRequestController::class, 'getTemplateContent']);
+    Route::post('/save-wap-request', [WapRequestController::class, 'saveWapRequest']);
 
 
 

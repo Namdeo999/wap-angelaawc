@@ -15,6 +15,12 @@ class CreateWapRequestsTable extends Migration
     {
         Schema::create('wap_requests', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('client_mobile');
+            $table->string('template_id');
+            $table->longText('message');
+            $table->integer('approve')->default(0);
+            $table->integer('reject')->default(0);
             $table->timestamps();
         });
     }

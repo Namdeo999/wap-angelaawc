@@ -8,9 +8,9 @@
   border-radius: 0px;
 }
 .btn-group-sm>.btn, .btn-sm {
-  padding: 1px 6px;
+  padding: 3px 5px;
   font-size: .875rem;
-  line-height: 1.5;
+  line-height: 1.0;
   border-radius: 0px;
 }
 
@@ -30,4 +30,9 @@
 
 .form-select-sm {
   margin-bottom: 5px;
+}
+
+.badge{
+  padding: 5px;
+  border-radius: 0px;
 }
