@@ -29,6 +29,8 @@ Route::post('admin/auth', [AdminController::class, 'adminAuth']);
 Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/dashboard', [DashboardController::class, 'index']);
 
+    Route::post('admin/send-message', [DashboardController::class, 'sendMessage']);
+
     Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
     Route::post('admin/save-admin', [AdminController::class, 'saveAdmin']);
     Route::get('admin/edit-admin/{admin_id}', [AdminController::class, 'editAdmin']);
@@ -47,6 +49,8 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/edit-template/{template_id}', [TemplateController::class, 'editTemplate']);
     Route::post('admin/update-template/{template_id}', [TemplateController::class, 'updateTemplate']);
     Route::get('admin/delete-template/{template_id}', [TemplateController::class, 'deleteTemplate']);
+
+
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
