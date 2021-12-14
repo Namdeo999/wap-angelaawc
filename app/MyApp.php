@@ -10,4 +10,5 @@ class MyApp {
    const MANAGER = 2;
 
    const STATUS = 1;
+   const APPROVE = 1;
 }

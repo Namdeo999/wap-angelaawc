@@ -19,6 +19,7 @@ class CreateWapRequestsTable extends Migration
             $table->string('client_mobile');
             $table->string('template_id');
             $table->longText('message');
+            $table->integer('approve_by')->default(0);
             $table->integer('approve')->default(0);
             $table->integer('reject')->default(0);
             $table->timestamps();

@@ -20,13 +20,13 @@
                                 <th>User Name</th>
                                 <th>Template</th>
                                 <th>Client Mobile</th>
+                                <th>Message</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         
                         <tbody>
                             {{$count = ""}}
-                            
                             @foreach ($wap_request as $item)
                                 <tr>
                                     <td>{{++$count}}</td>
@@ -41,7 +41,8 @@
                                         {{-- <a href="https://wa.me/919479505099" >whatsapp</a> --}}
 
                                         <button type="button" class="btn btn-info btn-sm previewBtn" value="{{$item->id}}">Preview</button>
-                                        <button type="button" class="btn btn-primary btn-sm sendBtn" value="{{$item->id}}">Send</button>
+                                        {{-- <button type="button" class="btn btn-primary btn-sm sendBtn" value="{{$item->id}}">Send</button> --}}
+                                        <button type="button" class="btn btn-primary btn-sm approveBtn" value="{{$item->id}}">Approve</button>
                                         <button type="button" class="btn btn-danger btn-sm rejectBtn" value="{{$item->id}}">Reject</button>
                                     </td>
                                 </tr>
@@ -78,6 +79,12 @@
             $(document).on('click','.sendBtn', function (e) {
                 e.preventDefault();
                 sendMessage();
+            });
+
+            $(document).on('click','.approveBtn', function (e) {
+                e.preventDefault();
+                const wap_request_id = $(this).val();
+                approveWapRequest(wap_request_id);
             });
 
             // $(document).on('click','.editTemplateBtn', function (e) {
@@ -120,28 +127,41 @@
         //     });
         // }
 
-        function sendMessage(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function approveWapRequest(wap_request_id) {
+            fetch("approve-wap-request/"+wap_request_id)
+            .then(response => response.json())
+            .then(data =>{
+                if(data.status == 200){
+                    window.location.reload();
                 }
-            });
-    
-            //var formData = new FormData($("#wapRequestForm")[0]);
-            
-            $.ajax({
-                type: "POST",
-                url: "send-message",
-                data: JSON.stringify({
-                    number: 919479505099,
-                    msg: "Testing",
-                }),
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
             });
         }
+
+        // function sendMessage(){
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+    
+        //     var formData = new FormData($("#wapRequestForm")[0]);
+            
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "send-message",
+        //         data: JSON.stringify({
+        //             number: 919479505099,
+        //             msg: "Testing",
+        //         }),
+        //         dataType: "json",
+        //         success: function (response) {
+        //             console.log(response);
+        //         }
+        //     });
+        // }
 
         // function editTemplate(template_id){
         //     $.ajax({

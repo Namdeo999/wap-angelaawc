@@ -50,7 +50,7 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/update-template/{template_id}', [TemplateController::class, 'updateTemplate']);
     Route::get('admin/delete-template/{template_id}', [TemplateController::class, 'deleteTemplate']);
 
-
+    Route::get('admin/approve-wap-request/{wap_request_id}', [WapRequestController::class, 'approveWapRequest']);
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
@@ -66,6 +66,9 @@ Route::group(['middleware'=>'user_auth'], function(){
     Route::get('/wap-request', [WapRequestController::class, 'index']);
     Route::get('/get-template-content/{template_id}', [WapRequestController::class, 'getTemplateContent']);
     Route::post('/save-wap-request', [WapRequestController::class, 'saveWapRequest']);
+    Route::get('/edit-wap-request/{wap_request_id}', [WapRequestController::class, 'editWapRequest']);
+    Route::post('/update-wap-request/{wap_request_id}', [WapRequestController::class, 'updateWapRequest']);
+    Route::get('/delete-wap-request/{wap_request_id}', [WapRequestController::class, 'deleteWapRequest']);
 
 
 

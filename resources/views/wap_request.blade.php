@@ -58,14 +58,33 @@
       </div>
   </div>
 </div>
+{{-- delete modal --}}
+<div class="modal fade" id="deleteWapRequestModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Delete Wap Request </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body">
+                <center>
+                    <h5>Are you sure?</h5>
+                        <button type="button" id="yesDeleteWapRequestBtn" class="btn btn-primary btn-sm mx-1 ">Yes</button>
+                        <button type="button" class="btn btn-secondary mx-1 btn-sm" data-bs-dismiss="modal">No</button>
+                    <hr>
+                </center>
+            </div>
+    </div>
+    </div>
+</div>
 
-  <div>
+<div>
     <div class="row ">
         <div class="offset-md-10 col-md-2">
             <button type="button" id="createRequest" class="btn btn-block btn-primary btn-flat btn-sm mt-2" >Create Request</button>
         </div>
     </div>
-  </div>
+</div>
 
     <div class="row">
         <div class="col-md-10">
@@ -86,7 +105,7 @@
                                 <th>Client Mobile</th>
                                 <th>Message</th>
                                 <th>Status</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,10 +120,10 @@
                                     <td>{{$item->client_mobile}}</td>
                                     <td>{{$item->message}}</td>
                                     <td><span class="badge bg-info text-dark">Wait For Approval</span></td>
-                                    {{-- <td>
+                                    <td>
                                         <button type="button" class="btn btn-secondary btn-sm editWapRequestBtn" value="{{$item->id}}">Edit</button>
                                         <button type="button" class="btn btn-danger btn-sm deleteWapRequestBtn" value="{{$item->id}}">Delete</button>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -116,7 +135,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
 
                 <div class="card-header">
@@ -130,12 +149,26 @@
                                 <th>SN</th>
                                 <th>Req ID</th>
                                 <th>Template</th>
-                                <th>Manager</th>
+                                <th>Client Mobile</th>
+                                <th>Message</th>
+                                <th>Approve By</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {{$count = ""}}
+                            @foreach ($approve_wap_request as $item)
+                                <tr>
+                                    <td>{{++$count}}</td>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->template_name}}</td>
+                                    <td>{{$item->client_mobile}}</td>
+                                    <td>{{$item->message}}</td>
+                                    <td>Manager Name</td>
+                                    <td><span class="badge bg-success text-dark">Approved</span></td>
+                                    
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -170,30 +203,30 @@
                 saveWapRequest();
             });
 
-            // $(document).on('click','.editTemplateBtn', function (e) {
-            //     e.preventDefault();
-            //     const template_id = $(this).val();
-            //     editTemplate(template_id);
-            // });
+            $(document).on('click','.editWapRequestBtn', function (e) {
+                e.preventDefault();
+                const wap_request_id = $(this).val();
+                editWapRequest(wap_request_id);
+            });
 
-            // $(document).on('click','#updateTemplateBtn', function (e) {
-            //     e.preventDefault();
-            //     const template_id = $(this).val();
-            //     updateTemplate(template_id);
-            // });
+            $(document).on('click','#updateWapRequestBtn', function (e) {
+                e.preventDefault();
+                const wap_request_id = $(this).val();
+                updateWapRequest(wap_request_id);
+            });
             
-            // $(document).on('click','.deleteTemplateBtn', function (e) {
-            //     e.preventDefault();
-            //     const template_id = $(this).val();
-            //     $('#deleteTemplateModal').modal('show');
-            //     $('#yesDeleteTemplateBtn').val(template_id);
-            // });
+            $(document).on('click','.deleteWapRequestBtn', function (e) {
+                e.preventDefault();
+                const wap_request_id = $(this).val();
+                $('#deleteWapRequestModal').modal('show');
+                $('#yesDeleteWapRequestBtn').val(wap_request_id);
+            });
 
-            // $(document).on('click','#yesDeleteTemplateBtn', function (e) {
-            //     e.preventDefault();
-            //     const template_id = $(this).val();
-            //     deleteTemplate(template_id);
-            // });
+            $(document).on('click','#yesDeleteWapRequestBtn', function (e) {
+                e.preventDefault();
+                const wap_request_id = $(this).val();
+                deleteWapRequest(wap_request_id);
+            });
 
 
         });
@@ -245,74 +278,76 @@
             });
         }
 
-        // function editTemplate(template_id){
-        //     $.ajax({
-        //         type: "get",
-        //         url: "edit-template/"+template_id,
-        //         dataType: "json",
-        //         success: function (response) {
-        //             if(response.status == 200){
-        //                 $('#templateModal').modal('show');
-        //                 $('#template_err').html('');
-        //                 $('#template_err').removeClass('alert alert-danger');
-        //                 $("#templateForm").trigger( "reset" ); 
-        //                 $('#saveTemplateBtn').addClass('hide');
-        //                 $('#updateTemplateBtn').removeClass('hide');
-        //                 $('#template_name').val(response.template.template_name);
-        //                 $('#template_content').val(response.template.template_content);
-        //                 $('#updateTemplateBtn').val(response.template.id);
-        //             }
-        //         }
-        //     });
-        // }
+        function editWapRequest(wap_request_id){
+            fetch("edit-wap-request/"+wap_request_id)
+            .then(response => response.json())
+            .then(data =>{
+                //console.log(data);
+                if(data.status == 200){
+                    $('#wapRequestModal').modal('show');
+                    $('#wap_request_err').html('');
+                    $('#wap_request_err').removeClass('alert alert-danger');
+                    $("#wapRequestForm").trigger( "reset" ); 
+                    $('#saveWapRequestBtn').addClass('hide');
+                    $('#updateWapRequestBtn').removeClass('hide');
+                    $('#client_mobile').val(data.wap_request.client_mobile);
+                    $('#template_id').val(data.wap_request.template_id);
+                    $('#message').val(data.wap_request.message);
+                    $('#updateWapRequestBtn').val(data.wap_request.id);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
 
-        // function updateTemplate(template_id){
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
+        function updateWapRequest(wap_request_id){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             
-        //     var formData = new FormData($("#templateForm")[0]);
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "update-template/"+template_id,
-        //         data: formData,
-        //         dataType: "json",
-        //         cache: false,
-        //         contentType: false, 
-        //         processData: false, 
-        //         success: function (response) {
-        //             if(response.status == 400)
-        //             {
-        //                 $('#template_err').html('');
-        //                 $('#template_err').addClass('alert alert-danger');
-        //                 var count = 1;
-        //                 $.each(response.errors, function (key, err_value) { 
-        //                     $('#template_err').append('<span>' + count++ +'. '+ err_value+'</span></br>');
-        //                 });
+            var formData = new FormData($("#wapRequestForm")[0]);
+            $.ajax({
+                type: "POST",
+                url: "update-wap-request/"+wap_request_id,
+                data: formData,
+                dataType: "json",
+                cache: false,
+                contentType: false, 
+                processData: false, 
+                success: function (response) {
+                    if(response.status == 400)
+                    {
+                        $('#wap_request_err').html('');
+                        $('#wap_request_err').addClass('alert alert-danger');
+                        var count = 1;
+                        $.each(response.errors, function (key, err_value) { 
+                            $('#wap_request_err').append('<span>' + count++ +'. '+ err_value+'</span></br>');
+                        });
 
-        //             }else{
-        //                 $('#template_err').html('');
-        //                 $('#templateModal').modal('hide');
-        //                 window.location.reload();
-        //             }
-        //         }
-        //     });
-        // }
+                    }else{
+                        $('#wap_request_err').html('');
+                        $('#wapRequestModal').modal('hide');
+                        window.location.reload();
+                    }
+                }
+            });
+        }
 
-        // function deleteTemplate(template_id) {
-        //     $.ajax({
-        //         type: "get",
-        //         url: "delete-template/"+template_id,
-        //         dataType: "json",
-        //         success: function (response) {
-        //             if(response.status == 200){
-        //                 window.location.reload();
-        //             }
-        //         }
-        //     });
-        // }
+        function deleteWapRequest(wap_request_id) {
+            fetch("delete-wap-request/"+wap_request_id)
+            .then(response => response.json())
+            .then(data =>{
+                if(data.status == 200){
+                    window.location.reload();
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
 
         
         
