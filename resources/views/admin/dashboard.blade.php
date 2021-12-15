@@ -1,10 +1,22 @@
 @extends('layouts.app')
 @section('page_title','Dashboard')
+
+@section('style')
+@section('style')
+<style>
+    .wap_request_row{
+        cursor: pointer;
+    }
+    
+</style>
+@endsection
+@endsection
  
 @section('content')
   <div class="row mt-2"></div>
+  
     <div class="row mt-2">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
 
                 <div class="card-header">
@@ -12,6 +24,7 @@
                 </div>
 
                 <div class="card-body table-responsive p-0" style="height: 200px;">
+                    
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
@@ -19,8 +32,6 @@
                                 <th>Req ID</th>
                                 <th>User Name</th>
                                 <th>Template</th>
-                                <th>Client Mobile</th>
-                                <th>Message</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -28,27 +39,43 @@
                         <tbody>
                             {{$count = ""}}
                             @foreach ($wap_request as $item)
-                                <tr>
-                                    <td>{{++$count}}</td>
+                                <tr wap_request_id="{{$item->id}}">
+                                    <td >{{++$count}}</td>
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->user_name}}</td>
                                     <td>{{$item->template_name}}</td>
-                                    <td>{{$item->client_mobile}}</td>
-                                    <td>{{$item->message}}</td>
+                                    <td class="hide">{{$item->client_mobile}}</td>
+                                    <td class="hide">{{$item->message}}</td>
                                     <td>
-                                        {{-- <a href="https://api.whatsapp.com/send?phone=919479505099&text=testing" >whatsapp</a> --}}
-                                        <a class="btn btn-primary btn-sm" href="https://wa.me/91{{$item->client_mobile}}?text={{$item->message}}" target="_blank">whatsapp</a>
-                                        {{-- <a href="https://wa.me/919479505099" >whatsapp</a> --}}
-
                                         <button type="button" class="btn btn-info btn-sm previewBtn" value="{{$item->id}}">Preview</button>
+                                        <a class="btn btn-primary btn-sm" href="https://wa.me/91{{$item->client_mobile}}?text={{rawurlencode($item->message)}}" target="_blank">Send Msg</a>
                                         {{-- <button type="button" class="btn btn-primary btn-sm sendBtn" value="{{$item->id}}">Send</button> --}}
                                         <button type="button" class="btn btn-primary btn-sm approveBtn" value="{{$item->id}}">Approve</button>
                                         <button type="button" class="btn btn-danger btn-sm rejectBtn" value="{{$item->id}}">Reject</button>
+                                        
                                     </td>
+                                    
+                                    <div class="modal fade" id="wapRequestDetailModal_{{$item->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">{{$item->user_name}} </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                        
                 </div>
 
             </div>
@@ -75,6 +102,20 @@
             //     const template_id = $(this).val();
             //     getTemplateContent(template_id);
             // });
+
+            $(document).on('click','.previewBtn', function (e) {
+                e.preventDefault();
+                //const wap_request_id = $(this).attr("wap_request_id");
+                const wap_request_id = $(this).val();
+                //$('.showWorkBtn').removeClass('btn-primary');
+                //$('.showWorkBtn').addClass('btn-secondary');
+                //$('.assign_work_text_show').text("");
+                $('#wapRequestDetailModal_'+wap_request_id).modal('show');
+                //$('#view_title_'+iform_id).text($(".title_"+iform_id).text());
+                //$('#view_fname_'+iform_id).text($(".fname_"+iform_id).text());
+                //$('#view_lname_'+iform_id).text($(".lname_"+iform_id).text());
+                
+            });
 
             $(document).on('click','.sendBtn', function (e) {
                 e.preventDefault();

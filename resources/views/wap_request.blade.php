@@ -81,7 +81,7 @@
 <div>
     <div class="row ">
         <div class="offset-md-10 col-md-2">
-            <button type="button" id="createRequest" class="btn btn-block btn-primary btn-flat btn-sm mt-2" >Create Request</button>
+            <button type="button" id="createRequest" class="btn btn-block btn-primary btn-flat btn-sm mt-2" >New Request</button>
         </div>
     </div>
 </div>
@@ -166,7 +166,6 @@
                                     <td>{{$item->message}}</td>
                                     <td>Manager Name</td>
                                     <td><span class="badge bg-success text-dark">Approved</span></td>
-                                    
                                 </tr>
                             @endforeach
                         </tbody>
