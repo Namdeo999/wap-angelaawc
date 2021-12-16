@@ -16,7 +16,7 @@
   <div class="row mt-2"></div>
   
     <div class="row mt-2">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
 
                 <div class="card-header">
@@ -31,7 +31,7 @@
                                 <th>SN</th>
                                 <th>Req ID</th>
                                 <th>User Name</th>
-                                <th>Template</th>
+                                {{-- <th>Template</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,9 +43,9 @@
                                     <td >{{++$count}}</td>
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->user_name}}</td>
-                                    <td>{{$item->template_name}}</td>
+                                    <td class="hide">{{$item->template_name}}</td>
                                     <td class="hide">{{$item->client_mobile}}</td>
-                                    <td class="hide">{{$item->message}}</td>
+                                    <td class="hide" id="wap_message_{{$item->id}}">{{$item->message}}</td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm previewBtn" value="{{$item->id}}">Preview</button>
                                         <a class="btn btn-primary btn-sm" href="https://wa.me/91{{$item->client_mobile}}?text={{rawurlencode($item->message)}}" target="_blank">Send Msg</a>
@@ -56,14 +56,125 @@
                                     </td>
                                     
                                     <div class="modal fade" id="wapRequestDetailModal_{{$item->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog ">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">{{$item->user_name}} </h5>
+                                                    <h5 class="modal-title" id="staticBackdropLabel"><span>[ {{$item->id}} ]</span> User Name - {{$item->user_name}} </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    
+                                                    <div class="row mb-1">
+                                                        <div class="col-md-6">
+                                                            <div class="card border-info mb-3" >
+                                                                <div class="card-body">
+                                                                    <small>Client Mobile</small>
+                                                                    <b><p class="card-text">{{$item->client_mobile}}</p></b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="card border-info mb-3" >
+                                                                <div class="card-body">
+                                                                    <small>Template Name</small>
+                                                                    <b><p class="card-text">{{$item->template_name}}</p></b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-1">
+                                                            <div class="col-md-12">
+                                                                <textarea name="message" rows="4" class="form-control" disabled>{{$item->message}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                        
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <div class="card">
+
+                <div class="card-header">
+                    <h3 class="card-title"> <b>Approved Wap Request</b> </h3>
+                </div>
+
+                <div class="card-body table-responsive p-0" style="height: 200px;">
+                    
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Req ID</th>
+                                <th>User Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {{$count = ""}}
+                            @foreach ($approved_wap_request as $item)
+                                <tr wap_request_id="{{$item->id}}">
+                                    <td >{{++$count}}</td>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->user_name}}</td>
+                                    <td> 
+                                        @if ($item->approve == MyApp::APPROVE)
+                                            <span class="badge bg-success text-dark">Approved</span>
+                                        @endif
+                                    </td>
+                                    <td class="hide">{{$item->template_name}}</td>
+                                    <td class="hide">{{$item->client_mobile}}</td>
+                                    <td class="hide" id="wap_message_{{$item->id}}">{{$item->message}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn-sm previewBtn" value="{{$item->id}}">Preview</button>     
+                                    </td>
+                                    
+                                    <div class="modal fade" id="wapRequestDetailModal_{{$item->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog ">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel"><span>[ {{$item->id}} ]</span> User Name - {{$item->user_name}} </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row mb-1">
+                                                        <div class="col-md-6">
+                                                            <div class="card border-info mb-3" >
+                                                                <div class="card-body">
+                                                                    <small>Client Mobile</small>
+                                                                    <b><p class="card-text">{{$item->client_mobile}}</p></b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="card border-info mb-3" >
+                                                                <div class="card-body">
+                                                                    <small>Template Name</small>
+                                                                    <b><p class="card-text">{{$item->template_name}}</p></b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-1">
+                                                            <div class="col-md-12">
+                                                                <textarea name="message" rows="4" class="form-control" disabled>{{$item->message}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -106,15 +217,9 @@
             $(document).on('click','.previewBtn', function (e) {
                 e.preventDefault();
                 //const wap_request_id = $(this).attr("wap_request_id");
+                //$('#show_wap_message').text($('#wap_message_'+wap_request_id).text());
                 const wap_request_id = $(this).val();
-                //$('.showWorkBtn').removeClass('btn-primary');
-                //$('.showWorkBtn').addClass('btn-secondary');
-                //$('.assign_work_text_show').text("");
                 $('#wapRequestDetailModal_'+wap_request_id).modal('show');
-                //$('#view_title_'+iform_id).text($(".title_"+iform_id).text());
-                //$('#view_fname_'+iform_id).text($(".fname_"+iform_id).text());
-                //$('#view_lname_'+iform_id).text($(".lname_"+iform_id).text());
-                
             });
 
             $(document).on('click','.sendBtn', function (e) {

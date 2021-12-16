@@ -21,10 +21,10 @@ class WapRequestController extends Controller
 
         $approve_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
                             ->join("templates","templates.id","=","wap_requests.template_id")
+                            ->join("admins","admins.id","=","wap_requests.approve_by")
                             ->where("wap_requests.user_id","=", session('USER_ID'))
                             ->where("wap_requests.approve","=", MyApp::APPROVE)
-                            ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
-                            
+                            ->get(['wap_requests.*','users.user_name', 'templates.template_name', 'admins.name as admin_name']);
         return view('wap_request',[
             'template'=>$template,
             'wap_request'=>$wap_request,

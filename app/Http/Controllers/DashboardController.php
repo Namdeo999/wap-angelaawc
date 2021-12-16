@@ -19,8 +19,15 @@ class DashboardController extends Controller
                             ->join("templates","templates.id","=","wap_requests.template_id")
                             ->where("wap_requests.approve","=", 0)
                             ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
+
+        $approved_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
+                            ->join("templates","templates.id","=","wap_requests.template_id")
+                            ->where("wap_requests.approve","=", MyApp::APPROVE)
+                            ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
+
         return view('admin/dashboard',[
-            'wap_request'=>$wap_request
+            'wap_request'=>$wap_request,
+            'approved_wap_request'=>$approved_wap_request
         ]);
     }
 
