@@ -7,6 +7,7 @@ use Validator;
 use App\Models\WapRequest;
 use App\Models\Template;
 use App\MyApp;
+use Carbon\Carbon;
 
 class WapRequestController extends Controller
 {
@@ -25,6 +26,7 @@ class WapRequestController extends Controller
                             ->where("wap_requests.user_id","=", session('USER_ID'))
                             ->where("wap_requests.approve","=", MyApp::APPROVE)
                             ->get(['wap_requests.*','users.user_name', 'templates.template_name', 'admins.name as admin_name']);
+
         return view('wap_request',[
             'template'=>$template,
             'wap_request'=>$wap_request,
@@ -60,6 +62,8 @@ class WapRequestController extends Controller
             $model->client_mobile = $req->input('client_mobile');
             $model->template_id = $req->input('template_id');
             $model->message = $req->input('message');
+            $model->request_date = date('Y-m-d');
+            $model->request_time = date('g:i:s A');
             $model->save();
             return response()->json([
                 'status'=>200
@@ -95,6 +99,8 @@ class WapRequestController extends Controller
             $model->client_mobile = $req->input('client_mobile');
             $model->template_id = $req->input('template_id');
             $model->message = $req->input('message');
+            $model->request_date = date('Y-m-d');
+            $model->request_time = date('g:i:s A');
             $model->save();
             return response()->json([
                 'status'=>200
@@ -116,6 +122,8 @@ class WapRequestController extends Controller
         $model = WapRequest::find($wap_request_id);
         $model->approve_by = session('ADMIN_ID'); 
         $model->approve = MyApp::APPROVE; 
+        $model->approve_date = date('Y-m-d');
+        $model->approve_time = date('g:i:s A');
         $model->save();
         return response()->json([
             'status'=>200

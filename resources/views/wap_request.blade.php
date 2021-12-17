@@ -87,14 +87,14 @@
 </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
 
                 <div class="card-header">
                     <h3 class="card-title"> <b>Wap Request</b> </h3>
                 </div>
 
-                <div class="card-body table-responsive p-0" style="height: 200px;">
+                <div class="card-body table-responsive p-0" style="height: 400px;">
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
@@ -115,10 +115,13 @@
                                     <td>{{++$count}}</td>
                                     <td>{{$item->id}}</td>
                                     {{-- <td>{{$item->user_name}}</td> --}}
-                                    <td>{{$item->template_name}}</td>
+                                    <td>
+                                        <div>{{$item->template_name}}</div>
+                                        <small class="dt_color">{{date('d-m-Y', strtotime($item->request_date)) . " " . $item->request_time}}</small>
+                                    </td>
                                     <td>{{$item->client_mobile}}</td>
                                     <td class="hide">{{$item->message}}</td>
-                                    <td><span class="badge bg-info text-dark">Wait For Approval</span></td>
+                                    <td><span class="badge bg-warning text-dark">Wait For Approval</span></td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm previewBtn" value="{{$item->id}}">Preview</button>
                                         <button type="button" class="btn btn-secondary btn-sm editWapRequestBtn" value="{{$item->id}}">Edit</button>
@@ -170,23 +173,20 @@
 
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-5">
             <div class="card">
 
                 <div class="card-header">
                     <h3 class="card-title"> <b>Approved Request</b> </h3>
                 </div>
 
-                <div class="card-body table-responsive p-0" style="height: 200px;">
+                <div class="card-body table-responsive p-0" style="height: 400px;">
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
                                 <th>SN</th>
                                 <th>Req ID</th>
-                                <th>Template</th>
                                 <th>Client Mobile</th>
                                 <th>Approve By</th>
                                 <th>Status</th>
@@ -199,8 +199,11 @@
                                 <tr>
                                     <td>{{++$count}}</td>
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->template_name}}</td>
-                                    <td>{{$item->client_mobile}}</td>
+                                    <td class="hide">{{$item->template_name}}</td>
+                                    <td>
+                                        <div>{{$item->client_mobile}}</div>
+                                        <small class="dt_color">{{date('d-m-Y', strtotime($item->approve_date)) . " " . $item->approve_time}}</small>
+                                    </td>
                                     <td class="hide">{{$item->message}}</td>
                                     <td>{{$item->admin_name}}</td>
                                     <td><span class="badge bg-success text-dark">Approved</span></td>
@@ -252,6 +255,10 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="row">
+        
     </div>
 
 @endsection

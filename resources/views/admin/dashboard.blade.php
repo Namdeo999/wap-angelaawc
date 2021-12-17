@@ -18,12 +18,10 @@
     <div class="row mt-2">
         <div class="col-md-6">
             <div class="card">
-
                 <div class="card-header">
                     <h3 class="card-title"> <b>Pending Wap Request</b> </h3>
                 </div>
-
-                <div class="card-body table-responsive p-0" style="height: 200px;">
+                <div class="card-body table-responsive p-0" style="height: 450px;">
                     
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
@@ -42,7 +40,10 @@
                                 <tr wap_request_id="{{$item->id}}">
                                     <td >{{++$count}}</td>
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->user_name}}</td>
+                                    <td>
+                                        <div>{{$item->user_name}}</div>
+                                        <small class="dt_color">{{date('d-m-Y', strtotime($item->request_date)) . " " . $item->request_time}}</small>
+                                    </td>
                                     <td class="hide">{{$item->template_name}}</td>
                                     <td class="hide">{{$item->client_mobile}}</td>
                                     <td class="hide" id="wap_message_{{$item->id}}">{{$item->message}}</td>
@@ -102,18 +103,13 @@
 
             </div>
         </div>
-    </div>
 
-    <div class="row mt-2">
         <div class="col-md-6">
             <div class="card">
-
                 <div class="card-header">
                     <h3 class="card-title"> <b>Approved Wap Request</b> </h3>
                 </div>
-
-                <div class="card-body table-responsive p-0" style="height: 200px;">
-                    
+                <div class="card-body table-responsive p-0" style="height: 450px;">
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
@@ -131,7 +127,10 @@
                                 <tr wap_request_id="{{$item->id}}">
                                     <td >{{++$count}}</td>
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->user_name}}</td>
+                                    <td>
+                                        <div>{{$item->user_name}}</div>
+                                        <small class="dt_color">{{date('d-m-Y', strtotime($item->approve_date)) . " " . $item->approve_time}}</small>
+                                    </td>
                                     <td> 
                                         @if ($item->approve == MyApp::APPROVE)
                                             <span class="badge bg-success text-dark">Approved</span>
@@ -191,6 +190,10 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="row mt-2">
+        
     </div>
 
 @endsection
