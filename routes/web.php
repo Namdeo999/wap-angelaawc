@@ -51,6 +51,7 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/delete-template/{template_id}', [TemplateController::class, 'deleteTemplate']);
 
     Route::get('admin/approve-wap-request/{wap_request_id}', [WapRequestController::class, 'approveWapRequest']);
+    Route::post('admin/reject-wap-request/{wap_request_id}', [WapRequestController::class, 'rejectWapRequest']);
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);

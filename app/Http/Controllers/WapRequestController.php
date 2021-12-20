@@ -129,4 +129,28 @@ class WapRequestController extends Controller
             'status'=>200
         ]);
     }
+
+    public function rejectWapRequest(Request $req, $wap_request_id)
+    {
+        $validator = Validator::make($req->all(),[
+            'reject_msg' => 'required',
+        ]);
+        if($validator->fails())
+        {
+            return response()->json([
+                'status'=>400,
+                'errors'=>$validator->messages(),
+            ]);
+        }else{
+            $model = WapRequest::find($wap_request_id) ;
+            $model->reject = MyApp::STATUS;
+            $model->reject_msg = $req->input('reject_msg');
+            // $model->reject_date = date('Y-m-d');
+            // $model->reject_time = date('g:i:s A');
+            $model->save();
+            return response()->json([
+                'status'=>200
+            ]);
+        }
+    }
 }

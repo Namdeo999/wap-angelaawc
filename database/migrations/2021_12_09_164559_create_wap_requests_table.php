@@ -26,6 +26,7 @@ class CreateWapRequestsTable extends Migration
             $table->time('approve_time')->nullable();
             $table->integer('approve')->default(0);
             $table->integer('reject')->default(0);
+            $table->longText('reject_msg')->nullable();
             $table->timestamps();
         });
     }
