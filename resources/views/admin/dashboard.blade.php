@@ -109,7 +109,7 @@
                                                         </div>
                                                         <div class="row mb-1">
                                                             <div class="col-md-12">
-                                                                <textarea name="message" rows="4" class="form-control" disabled>{{$item->message}}</textarea>
+                                                                <textarea name="message" rows="10" class="form-control" disabled>{{$item->message}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -196,7 +196,7 @@
                                                         </div>
                                                         <div class="row mb-1">
                                                             <div class="col-md-12">
-                                                                <textarea name="message" rows="4" class="form-control" disabled>{{$item->message}}</textarea>
+                                                                <textarea name="message" rows="10" class="form-control" disabled>{{$item->message}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
