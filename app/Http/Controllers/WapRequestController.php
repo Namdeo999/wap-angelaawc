@@ -18,6 +18,7 @@ class WapRequestController extends Controller
                             ->join("templates","templates.id","=","wap_requests.template_id")
                             ->where("wap_requests.user_id","=", session('USER_ID'))
                             ->where("wap_requests.approve","=", 0)
+                            ->where("wap_requests.reject","=", 0)
                             ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
 
         $approve_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
@@ -27,10 +28,17 @@ class WapRequestController extends Controller
                             ->where("wap_requests.approve","=", MyApp::APPROVE)
                             ->get(['wap_requests.*','users.user_name', 'templates.template_name', 'admins.name as admin_name']);
 
+        $reject_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
+                            ->join("templates","templates.id","=","wap_requests.template_id")
+                            ->where("wap_requests.user_id","=", session('USER_ID'))
+                            ->where("wap_requests.reject","=", MyApp::STATUS)
+                            ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
+
         return view('wap_request',[
             'template'=>$template,
             'wap_request'=>$wap_request,
-            'approve_wap_request'=>$approve_wap_request
+            'approve_wap_request'=>$approve_wap_request,
+            'reject_wap_request'=>$reject_wap_request
         ]);
     }
 
@@ -101,6 +109,7 @@ class WapRequestController extends Controller
             $model->message = $req->input('message');
             $model->request_date = date('Y-m-d');
             $model->request_time = date('g:i:s A');
+            $model->reject = 0;
             $model->save();
             return response()->json([
                 'status'=>200
@@ -117,40 +126,5 @@ class WapRequestController extends Controller
         ]);
     }
 
-    public function approveWapRequest($wap_request_id)
-    {
-        $model = WapRequest::find($wap_request_id);
-        $model->approve_by = session('ADMIN_ID'); 
-        $model->approve = MyApp::APPROVE; 
-        $model->approve_date = date('Y-m-d');
-        $model->approve_time = date('g:i:s A');
-        $model->save();
-        return response()->json([
-            'status'=>200
-        ]);
-    }
-
-    public function rejectWapRequest(Request $req, $wap_request_id)
-    {
-        $validator = Validator::make($req->all(),[
-            'reject_msg' => 'required',
-        ]);
-        if($validator->fails())
-        {
-            return response()->json([
-                'status'=>400,
-                'errors'=>$validator->messages(),
-            ]);
-        }else{
-            $model = WapRequest::find($wap_request_id) ;
-            $model->reject = MyApp::STATUS;
-            $model->reject_msg = $req->input('reject_msg');
-            // $model->reject_date = date('Y-m-d');
-            // $model->reject_time = date('g:i:s A');
-            $model->save();
-            return response()->json([
-                'status'=>200
-            ]);
-        }
-    }
+    
 }

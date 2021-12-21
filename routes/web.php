@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\WapRequestController;
+use App\Http\Controllers\AdminWapRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,6 @@ Route::post('admin/auth', [AdminController::class, 'adminAuth']);
 Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/dashboard', [DashboardController::class, 'index']);
 
-    Route::post('admin/send-message', [DashboardController::class, 'sendMessage']);
-
     Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
     Route::post('admin/save-admin', [AdminController::class, 'saveAdmin']);
     Route::get('admin/edit-admin/{admin_id}', [AdminController::class, 'editAdmin']);
@@ -50,8 +49,10 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/update-template/{template_id}', [TemplateController::class, 'updateTemplate']);
     Route::get('admin/delete-template/{template_id}', [TemplateController::class, 'deleteTemplate']);
 
-    Route::get('admin/approve-wap-request/{wap_request_id}', [WapRequestController::class, 'approveWapRequest']);
-    Route::post('admin/reject-wap-request/{wap_request_id}', [WapRequestController::class, 'rejectWapRequest']);
+    Route::get('admin/wap-request', [AdminWapRequestController::class, 'index']);
+    Route::post('admin/send-message', [AdminWapRequestController::class, 'sendMessage']);
+    Route::get('admin/approve-wap-request/{wap_request_id}', [AdminWapRequestController::class, 'approveWapRequest']);
+    Route::post('admin/reject-wap-request/{wap_request_id}', [AdminWapRequestController::class, 'rejectWapRequest']);
 
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
