@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page_title','Dashboard')
+@section('page_title','Wap Request')
 
 
 @section('style')

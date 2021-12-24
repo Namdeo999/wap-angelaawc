@@ -349,13 +349,10 @@ function allWapRequest() {
     .then(response => response.json())
     .then(response => {
         console.log(response);
-        //if (response.status == 200) {
-            //window.location.reload();
-            // $('#total_wap_request').text(response.total_request_count);
-            // $('#approved_wap_request').text(response.approved_wap_request);
-            // $('#reject_wap_request').text(response.reject_wap_request);
-            // $('#wap_users').text(response.wap_users);
-        //}
+        if (response.status == 200) {
+            $('#all_web_request').html("");
+            $('#all_web_request').append(response.html);
+        }
     })
     .catch((error) => {
         console.error('Error:', error);

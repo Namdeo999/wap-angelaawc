@@ -11,4 +11,5 @@ class MyApp {
 
    const STATUS = 1;
    const APPROVE = 1;
+   const REJECT = 1;
 }
