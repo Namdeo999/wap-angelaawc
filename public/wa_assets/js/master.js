@@ -344,17 +344,4 @@ function allWapRequestCount() {
     });
 }
 
-function allWapRequest() {
-    fetch("all-wap-request")
-    .then(response => response.json())
-    .then(response => {
-        console.log(response);
-        if (response.status == 200) {
-            $('#all_web_request').html("");
-            $('#all_web_request').append(response.html);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
+

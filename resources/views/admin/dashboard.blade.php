@@ -64,16 +64,20 @@
         </div>
     </div>
 
-    <section class="content">
+    {{-- <section class="content"> --}}
+        <div class="row">
+            <div class="col-md-12">
+                
+            
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"><b>Wap Request</b></h3>
                 <div class="card-tools">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn btn-primary"  value="">All</button>
-                        <button type="button" class="btn btn-success" status-type="" value="">Success</button>
-                        <button type="button" class="btn btn-info" status-type="" value="">Pending</button>
-                        <button type="button" class="btn btn-danger" status-type="" value="">Reject</button>
+                        <a href="{{ url('admin/dashboard')}}" class="btn btn-primary"  value="">All</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::APPROVE_FILTER )}}" class="btn btn-success">Success</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::PENDING_FILTER )}}" class="btn btn-info">Pending</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::REJECT_FILTER )}}" class="btn btn-danger">Reject</a>
                     </div>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -90,28 +94,61 @@
                             <th style="width: 25%">Template</th>
                             <th style="width: 15%">User Name</th>
                             <th style="width: 15%">Approved By</th>
-                            <th style="width: 8s%" class="text-center">Status</th>
-                            <th style="width: 10%">Action</th>
+                            <th style="width: 8%" class="text-center">Status</th>
+                            {{-- <th style="width: 10%">Action</th> --}}
                         </tr>
                     </thead>
                     <tbody id="all_web_request">
-                        
+                        {{$count = ""}}
+                        @foreach ($all_wap_request as $list)
+                            <tr>
+                                <td>{{++$count}}</td>
+                                <td>{{$list->id}}</td>
+                                <td>{{$list->client_mobile}}</td>
+                                <td>{{$list->template_name}}</td>
+                                <td>
+                                    <div>{{$list->user_name}}</div>
+                                    <small class="dt_color">{{date('d-m-Y', strtotime($list->request_date)) . " " . $list->request_time}}</small>
+                                </td>
+                                <td>
+                                    <div>{{$list->admin_name}}</div>
+                                    <small class="dt_color">{{date('d-m-Y', strtotime($list->approve_date)) . " " . $list->approve_time}}</small>
+                                </td>
+                                <td>
+                                    @if ($list->approve == MyApp::APPROVE)
+                                        <span class='badge badge-success'>Success</span>
+                                    @elseif($list->reject == MyApp::STATUS)
+                                        <span class='badge badge-danger'>Reject</span>
+                                    @else
+                                        <span class='badge badge-info'>Pending</span>    
+                                    @endif
+                                </td>
+                                {{-- <td>Action</td> --}}
+
+                                
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+            
         </div>
 
-    </section>
+    </div>
+</div>
+{{-- 
+    </section> --}}
 
 @endsection
 
 @section('script')
     <script>
+
          $(document).ready(function () {
             allWapRequestCount();
-            allWapRequest();
-
-         });
+            
+        });
+             
     </script>
 @endsection
   

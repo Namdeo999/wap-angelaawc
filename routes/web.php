@@ -28,9 +28,8 @@ Route::get('/admin', [AdminController::class, 'index']);
 Route::post('admin/auth', [AdminController::class, 'adminAuth']);
 
 Route::group(['middleware'=>'admin_auth'], function(){
-    Route::get('admin/dashboard', [DashboardController::class, 'index']);
+    Route::get('admin/dashboard/{status?}', [DashboardController::class, 'index']);
     Route::get('admin/all-wap-request-count', [DashboardController::class, 'allWapRequestCount']);
-    Route::get('admin/all-wap-request', [DashboardController::class, 'allWapRequest']);
 
     Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
     Route::post('admin/save-admin', [AdminController::class, 'saveAdmin']);
