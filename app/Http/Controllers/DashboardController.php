@@ -14,6 +14,11 @@ class DashboardController extends Controller
     //admin dashboard
     public function index($status="")
     {
+        $total_request_count = WapRequest::all()->count();
+        $approved_wap_request = WapRequest::where(['approve'=>MyApp::APPROVE])->count();
+        $reject_wap_request = WapRequest::where(['reject'=>MyApp::STATUS])->count();
+        $wap_users = User::all()->count();
+
         if($status == MyApp::APPROVE_FILTER){
             $all_wap_request = WapRequest::join('users','wap_requests.user_id','=','users.id')
                         ->leftjoin('admins','wap_requests.approve_by','=','admins.id')
@@ -43,25 +48,29 @@ class DashboardController extends Controller
         
 
         return view('admin.dashboard',[
-            'all_wap_request'=>$all_wap_request
-        ]);
-    }
-
-    public function allWapRequestCount()
-    {
-        $total_request_count = WapRequest::all()->count();
-        $approved_wap_request = WapRequest::where(['approve'=>MyApp::APPROVE])->count();
-        $reject_wap_request = WapRequest::where(['reject'=>MyApp::STATUS])->count();
-        $wap_users = User::all()->count();
-
-        return response()->json([
-            'status'=>200,
+            'all_wap_request'=>$all_wap_request,
             'total_request_count'=>$total_request_count,
             'approved_wap_request'=>$approved_wap_request,
             'reject_wap_request'=>$reject_wap_request,
             'wap_users'=>$wap_users
         ]);
     }
+
+    // public function allWapRequestCount()
+    // {
+    //     $total_request_count = WapRequest::all()->count();
+    //     $approved_wap_request = WapRequest::where(['approve'=>MyApp::APPROVE])->count();
+    //     $reject_wap_request = WapRequest::where(['reject'=>MyApp::STATUS])->count();
+    //     $wap_users = User::all()->count();
+
+    //     return response()->json([
+    //         'status'=>200,
+    //         'total_request_count'=>$total_request_count,
+    //         'approved_wap_request'=>$approved_wap_request,
+    //         'reject_wap_request'=>$reject_wap_request,
+    //         'wap_users'=>$wap_users
+    //     ]);
+    // }
 
     
     //user dashboard

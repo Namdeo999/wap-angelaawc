@@ -21,7 +21,7 @@
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-table"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Total Request</span>
-                    <span class="info-box-number" id="total_wap_request"></span>
+                    <span class="info-box-number">{{$total_request_count}}</span>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-tasks"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Approved</span>
-                    <span class="info-box-number" id="approved_wap_request"></span>
+                    <span class="info-box-number" >{{$approved_wap_request}}</span>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <span class="info-box-icon bg-danger elevation-1"><i class="far fa-window-close"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Rejected</span>
-                    <span class="info-box-number" id="reject_wap_request"></span>
+                    <span class="info-box-number" >{{$reject_wap_request}}</span>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <span class="info-box-icon bg-dark elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Users</span>
-                    <span class="info-box-number" id="wap_users"></span>
+                    <span class="info-box-number" >{{$wap_users}}</span>
                 </div>
             </div>
         </div>
@@ -75,9 +75,9 @@
                 <div class="card-tools">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                         <a href="{{ url('admin/dashboard')}}" class="btn btn-primary"  value="">All</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::APPROVE_FILTER )}}" class="btn btn-success">Success</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::PENDING_FILTER )}}" class="btn btn-info">Pending</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::REJECT_FILTER )}}" class="btn btn-danger">Reject</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::APPROVE_FILTER )}}" class="btn btn-success wap_request_count">Success</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::PENDING_FILTER )}}" class="btn btn-info wap_request_count">Pending</a>
+                        <a href="{{ url('admin/dashboard/'. MyApp::REJECT_FILTER )}}" class="btn btn-danger wap_request_count">Reject</a>
                     </div>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -145,7 +145,9 @@
     <script>
 
          $(document).ready(function () {
-            allWapRequestCount();
+
+            
+
             
         });
              
