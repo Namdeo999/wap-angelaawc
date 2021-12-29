@@ -71,18 +71,31 @@
             
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><b>Wap Request</b></h3>
-                <div class="card-tools">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                        <a href="{{ url('admin/dashboard')}}" class="btn btn-primary"  value="">All</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::APPROVE_FILTER )}}" class="btn btn-success wap_request_count">Success</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::PENDING_FILTER )}}" class="btn btn-info wap_request_count">Pending</a>
-                        <a href="{{ url('admin/dashboard/'. MyApp::REJECT_FILTER )}}" class="btn btn-danger wap_request_count">Reject</a>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title"><b>Wap Request</b></h3>
                     </div>
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control form-control-sm" value="" id="select_date">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card-tools ">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                                <button filter-type="" class="btn btn-dark btn-sm wap_request_filter" >Clear</button>
+                                <button filter-type="{{MyApp::APPROVE_FILTER}}" class="btn btn-success wap_request_filter">Success</button>
+                                <button filter-type="{{MyApp::PENDING_FILTER}}" class="btn btn-info wap_request_filter">Pending</button>
+                                <button filter-type="{{MyApp::REJECT_FILTER}}" class="btn btn-danger wap_request_filter">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-tool " data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus "></i>
+                        </button>
+                    </div>
                 </div>
+
             </div>
             <div class="card-body table-responsive p-0" style="height: 400px;">
                 <table class="table table-striped table-head-fixed ">
@@ -98,7 +111,7 @@
                             {{-- <th style="width: 10%">Action</th> --}}
                         </tr>
                     </thead>
-                    <tbody id="all_web_request">
+                    <tbody id="filter_web_request">
                         {{$count = ""}}
                         @foreach ($all_wap_request as $list)
                             <tr>
@@ -144,12 +157,43 @@
 @section('script')
     <script>
 
-         $(document).ready(function () {
+        $(document).ready(function () {
 
-            
+            $(document).on('click','.wap_request_filter', function () {
+                const filter_type = $(this).attr('filter-type');
+                wapRequestFilter(filter_type);
+            });
+            $(document).on('change','#select_date', function () {
+                const select_date = $(this).val();
+                //alert(select_date);
+                //wapRequestFilter(filter_type);
+            });
 
-            
+
+            // $(selector).change(function (e) { 
+            //     e.preventDefault();
+            //     const select_date = $(this).val();
+            //     alert(select_date);
+            // });
+                
         });
+        
+        function wapRequestFilter(filter_type){
+            $.ajax({
+                type: "get",
+                url: "wap-request-filter/"+filter_type,
+                dataType: "json",
+                success: function (response) {
+                    if(response.status == 200){
+                        $('#filter_web_request').html('');
+                        $('#filter_web_request').append(response.filter_html);
+                    }else{
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
              
     </script>
 @endsection
