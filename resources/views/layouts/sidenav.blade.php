@@ -75,6 +75,12 @@
                         <p>Wap Request</p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a href="{{url('#')}}" class="nav-link">
+                        <i class="fas fa-table"></i>
+                        <p>Reports</p>
+                    </a>
+                </li>
             @else
                 <li class="nav-item menu-open">
                     <a href="{{url('/dashboard')}}" class="nav-link active">

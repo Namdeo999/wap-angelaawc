@@ -29,7 +29,8 @@ Route::post('admin/auth', [AdminController::class, 'adminAuth']);
 
 Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/dashboard', [DashboardController::class, 'index']);
-    Route::get('admin/wap-request-filter/{filter_type?}', [DashboardController::class, 'wapRequestFilter']);
+    Route::get('admin/wap-request-filter/{select_date?}/{filter_type?}', [DashboardController::class, 'wapRequestFilter']);
+    Route::get('admin/wap-request-date-filter/{select_date?}', [DashboardController::class, 'wapRequestDateFilter']);
 
     Route::get('admin/wap-admin', [AdminController::class, 'wapAdmin']);
     Route::post('admin/save-admin', [AdminController::class, 'saveAdmin']);

@@ -74,10 +74,10 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class="card-title"><b>Wap Request</b></h3>
+                        <h3 class="card-title"><b>Wap Request</b> </h3>
                     </div>
                     <div class="col-md-2">
-                        <input type="date" class="form-control form-control-sm" value="" id="select_date">
+                        <input type="date" class="form-control form-control-sm" value="{{$today}}" id="select_date">
                     </div>
                     <div class="col-md-3">
                         <div class="card-tools ">
@@ -163,10 +163,12 @@
                 const filter_type = $(this).attr('filter-type');
                 wapRequestFilter(filter_type);
             });
-            $(document).on('change','#select_date', function () {
+
+            $(document).on('change','#select_date', function (e) {
+                e.preventDefault();
                 const select_date = $(this).val();
-                //alert(select_date);
-                //wapRequestFilter(filter_type);
+                wapRequestDateFilter(select_date);
+                //window.location.replace('dashboard/'+select_date);
             });
 
 
@@ -179,11 +181,29 @@
         });
         
         function wapRequestFilter(filter_type){
+            const select_date = $('#select_date').val();
             $.ajax({
                 type: "get",
-                url: "wap-request-filter/"+filter_type,
+                url: "wap-request-filter/"+select_date+"/"+filter_type,
                 dataType: "json",
                 success: function (response) {
+                    if(response.status == 200){
+                        $('#filter_web_request').html('');
+                        $('#filter_web_request').append(response.filter_html);
+                    }else{
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function wapRequestDateFilter(select_date){
+            $.ajax({
+                type: "get",
+                url: "wap-request-date-filter/"+select_date,
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
                     if(response.status == 200){
                         $('#filter_web_request').html('');
                         $('#filter_web_request').append(response.filter_html);
