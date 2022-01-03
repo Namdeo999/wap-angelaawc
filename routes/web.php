@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\WapRequestController;
 use App\Http\Controllers\AdminWapRequestController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/approve-wap-request/{wap_request_id}', [AdminWapRequestController::class, 'approveWapRequest']);
     Route::post('admin/reject-wap-request/{wap_request_id}', [AdminWapRequestController::class, 'rejectWapRequest']);
 
+    Route::get('admin/report', [ReportController::class, 'index']);
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
 });

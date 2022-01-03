@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a href="{{url('#')}}" class="nav-link">
+                    <a href="{{url('admin/report')}}" class="nav-link">
                         <i class="fas fa-table"></i>
                         <p>Reports</p>
                     </a>
