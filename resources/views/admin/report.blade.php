@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-md-2">
                             <select name="admin_id" id="admin_id" class="form-select form-select-sm">
-                                <option disabled selected>Select User</option>
+                                <option disabled selected>Select Admin</option>
                                 @foreach ($admins as $admin)
                                     <option value="{{$admin->id}}">{{$admin->name}}</option>
                                 @endforeach
@@ -30,6 +30,12 @@
                         <div class="col-md-3">
 
                         </div>
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <a href="{{url('admin/report')}}" class="btn btn-dark btn-sm " >Reset</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -56,7 +62,7 @@
                             </tr>
                         </thead>
                         
-                        <tbody>
+                        <tbody id="report_filter">
                             {{$count = ""}}
                             @foreach ($wap_request as $item)
                                 <tr>
@@ -130,4 +136,33 @@
 
         
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('change','#user_id', function () {
+                const user_id = $(this).val();
+                reportFilter(user_id);
+            });
+
+        });
+
+        function reportFilter(user_id) {
+            $.ajax({
+                type: "get",
+                url: "get-report-filter/"+user_id,
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response.status == 200) {
+                        $('#report_filter').html("");
+                        $('#report_filter').append(response.html);
+
+                    }
+                }
+            });
+        }
+    </script>
 @endsection
