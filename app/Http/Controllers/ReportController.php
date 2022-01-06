@@ -31,13 +31,20 @@ class ReportController extends Controller
         ]);
     }
 
-    public function getReportFilter($user_id)
+    public function getReportFilter($filter_type, $id)
     {
+        $condition = '';
+        if ($filter_type == MyApp::ADMIN_TYPE) {
+            $condition = 'wap_requests.approve_by';
+        }elseif ($filter_type == MyApp::USER_TYPE) {
+            $condition = 'wap_requests.user_id';
+        }
+
         $wap_request = WapRequest::join('users','wap_requests.user_id','=','users.id')
                             ->leftjoin('admins','wap_requests.approve_by','=','admins.id')
                             ->join('templates','wap_requests.template_id','=','templates.id')
                             ->where('wap_requests.approve', MyApp::APPROVE)
-                            ->where('wap_requests.user_id', $user_id)
+                            ->where($condition, $id)
                             ->get(['wap_requests.*','users.user_name','admins.name as admin_name','templates.template_name']);
 
         $html = "";
@@ -60,11 +67,10 @@ class ReportController extends Controller
             $html .= "</tr>";
         }
                         
-        
-        //$html = reportFilterHtml($wap_request);
         return response()->json([
             'status'=>200,
             'html'=>$html,
+            'wap_request'=>$wap_request
         ]);
     }
 

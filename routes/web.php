@@ -58,7 +58,7 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/reject-wap-request/{wap_request_id}', [AdminWapRequestController::class, 'rejectWapRequest']);
 
     Route::get('admin/report', [ReportController::class, 'index']);
-    Route::get('admin/get-report-filter/{user_id}', [ReportController::class, 'getReportFilter']);
+    Route::get('admin/get-report-filter/{filter_type}/{id}', [ReportController::class, 'getReportFilter']);
 
     Route::get('admin/logout', [AdminController::class, 'logout']);
 });

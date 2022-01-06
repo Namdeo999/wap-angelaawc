@@ -17,4 +17,7 @@ class MyApp {
    const APPROVE_FILTER = 1;
    const REJECT_FILTER = 2;
    const PENDING_FILTER = 3;
+
+   const ADMIN_TYPE = 1;
+   const USER_TYPE = 2;
 }

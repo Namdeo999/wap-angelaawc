@@ -9,16 +9,16 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-2">
-                            <select name="user_id" id="user_id" class="form-select form-select-sm">
-                                <option disabled selected>Select User</option>
+                            <select name="user_id" id="user_id" filter-type="{{MyApp::USER_TYPE}}" class="form-select form-select-sm">
+                                <option disabled selected id="select_user">Select User</option>
                                 @foreach ($users as $user)
                                     <option value="{{$user->id}}">{{$user->user_name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select name="admin_id" id="admin_id" class="form-select form-select-sm">
-                                <option disabled selected>Select Admin</option>
+                            <select name="admin_id" id="admin_id" filter-type="{{MyApp::ADMIN_TYPE}}" class="form-select form-select-sm">
+                                <option disabled selected id="select_admin">Select Admin</option>
                                 @foreach ($admins as $admin)
                                     <option value="{{$admin->id}}">{{$admin->name}}</option>
                                 @endforeach
@@ -58,7 +58,6 @@
                                 <th>Template</th>
                                 <th>User Name</th>
                                 <th>Manager</th>
-                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         
@@ -143,16 +142,26 @@
         $(document).ready(function () {
 
             $(document).on('change','#user_id', function () {
-                const user_id = $(this).val();
-                reportFilter(user_id);
+                $('#admin_id').val("");
+                $('#select_admin').prop("selected", true);
+                const filter_type = $(this).attr('filter-type');
+                const id = $(this).val();
+                reportFilter(filter_type, id);
+            });
+            $(document).on('change','#admin_id', function () {
+                $('#user_id').val("");
+                $('#select_user').prop("selected", true);
+                const filter_type = $(this).attr('filter-type');
+                const id = $(this).val();
+                reportFilter(filter_type, id);
             });
 
         });
 
-        function reportFilter(user_id) {
+        function reportFilter(filter_type, id) {
             $.ajax({
                 type: "get",
-                url: "get-report-filter/"+user_id,
+                url: "get-report-filter/"+filter_type+"/"+id,
                 dataType: "json",
                 success: function (response) {
                     //console.log(response);
