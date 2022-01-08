@@ -198,6 +198,24 @@ class DashboardController extends Controller
     //user dashboard
     public function userDashboard(Request $req)
     {
-        return view('/dashboard');
+        $user_id = session('USER_ID');
+        $total_request_count = WapRequest::where(['user_id'=>$user_id])->count();
+        $approved_wap_request = WapRequest::where(['user_id'=>$user_id,'approve'=>MyApp::APPROVE])->count();
+        $reject_wap_request = WapRequest::where(['user_id'=>$user_id,'reject'=>MyApp::STATUS])->count();
+        $today = date('Y-m-d');
+        $all_wap_request = WapRequest::join('users','wap_requests.user_id','=','users.id')
+                ->leftjoin('admins','wap_requests.approve_by','=','admins.id')
+                ->join('templates','wap_requests.template_id','=','templates.id')
+                ->where('wap_requests.request_date', $today)
+                ->where('wap_requests.user_id', $user_id)
+                ->get(['wap_requests.*','users.user_name','admins.name as admin_name','templates.template_name']);
+
+        return view('/dashboard',[
+            'total_request_count'=>$total_request_count,
+            'approved_wap_request'=>$approved_wap_request,
+            'reject_wap_request'=>$reject_wap_request,
+            'all_wap_request'=>$all_wap_request,
+            'today'=>$today
+        ]);
     }
 }
