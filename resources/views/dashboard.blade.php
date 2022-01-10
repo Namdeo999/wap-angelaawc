@@ -59,12 +59,12 @@
                         </div>
                         <div class="col-md-3">
                             <div class="card-tools ">
-                                {{-- <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                                     <button filter-type="" class="btn btn-dark btn-sm wap_request_filter" >Clear</button>
                                     <button filter-type="{{MyApp::APPROVE_FILTER}}" class="btn btn-success wap_request_filter">Success</button>
                                     <button filter-type="{{MyApp::PENDING_FILTER}}" class="btn btn-info wap_request_filter">Pending</button>
                                     <button filter-type="{{MyApp::REJECT_FILTER}}" class="btn btn-danger wap_request_filter">Reject</button>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1 d-grid gap-2 d-md-flex justify-content-md-end">
@@ -128,6 +128,60 @@
 
 @endsection
   
+@section('script')
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on('click','.wap_request_filter', function () {
+                const filter_type = $(this).attr('filter-type');
+                userWapRequestFilter(filter_type);
+            });
+
+            $(document).on('change','#select_date', function (e) {
+                e.preventDefault();
+                const select_date = $(this).val();
+                userWapRequestDateFilter(select_date);
+            });
+                
+        });
+        
+        function userWapRequestFilter(filter_type){
+            const select_date = $('#select_date').val();
+            $.ajax({
+                type: "get",
+                url: "user-wap-request-filter/"+select_date+"/"+filter_type,
+                dataType: "json",
+                success: function (response) {
+                    if(response.status == 200){
+                        $('#filter_web_request').html('');
+                        $('#filter_web_request').append(response.filter_html);
+                    }else{
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function userWapRequestDateFilter(select_date){
+            $.ajax({
+                type: "get",
+                url: "user-wap-request-date-filter/"+select_date,
+                dataType: "json",
+                success: function (response) {
+                    if(response.status == 200){
+                        $('#filter_web_request').html('');
+                        $('#filter_web_request').append(response.filter_html);
+                    }else{
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+             
+    </script>
+@endsection
 
 
 

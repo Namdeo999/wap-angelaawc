@@ -70,6 +70,9 @@ Route::post('/auth', [UserController::class, 'userAuth']);
 Route::group(['middleware'=>'user_auth'], function(){
     Route::get('/dashboard', [DashboardController::class, 'userDashboard']);
 
+    Route::get('/user-wap-request-filter/{select_date?}/{filter_type?}', [DashboardController::class, 'userWapRequestFilter']);
+    Route::get('/user-wap-request-date-filter/{select_date?}', [DashboardController::class, 'userWapRequestDateFilter']);
+
     Route::get('/wap-request', [WapRequestController::class, 'index']);
     Route::get('/get-template-content/{template_id}', [WapRequestController::class, 'getTemplateContent']);
     Route::post('/save-wap-request', [WapRequestController::class, 'saveWapRequest']);
