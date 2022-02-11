@@ -45,13 +45,21 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> <b>Pending Wap Request</b> </h3>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="card-title"> <b>Pending Wap Request</b> </h3>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger btn-sm " value="">Reject</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body table-responsive p-0" style="height: 450px;">
                     
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>SN</th>
                                 <th>Req ID</th>
                                 <th>User Name</th>
@@ -64,6 +72,11 @@
                             {{$count = ""}}
                             @foreach ($wap_request as $item)
                                 <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="">
+                                        </div>
+                                    </td>
                                     <td >{{++$count}}</td>
                                     <td>{{$item->id}}</td>
                                     <td>
@@ -224,7 +237,7 @@
                 <div class="card-header">
                     <h3 class="card-title"> <b>Rejected Wap Request</b> </h3>
                 </div>
-                <div class="card-body table-responsive p-0" style="height: 200px;">
+                <div class="card-body table-responsive p-0" style="height: 250px;">
                     
                     <table class="table table-head-fixed text-nowrap">
                         <thead>

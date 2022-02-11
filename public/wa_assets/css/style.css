@@ -47,3 +47,8 @@
 .dt_color{
   color: #28a745;
 }
+.form-check {
+  position: relative;
+  display: block;
+  padding-left: 1.5em;
+}

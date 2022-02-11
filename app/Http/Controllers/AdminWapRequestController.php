@@ -25,6 +25,8 @@ class AdminWapRequestController extends Controller
         $approved_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
                             ->join("templates","templates.id","=","wap_requests.template_id")
                             ->where("wap_requests.approve","=", MyApp::APPROVE)
+                            ->take(100)
+                            ->orderBy('approve_date', 'desc')
                             ->get(['wap_requests.*','users.user_name', 'templates.template_name']);
 
         $reject_wap_request = WapRequest::join("users","users.id","=","wap_requests.user_id")
