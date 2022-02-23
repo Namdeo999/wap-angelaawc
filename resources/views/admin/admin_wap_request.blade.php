@@ -50,7 +50,7 @@
                             <h3 class="card-title"> <b>Pending Wap Request</b> </h3>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-danger btn-sm " value="">Reject</button>
+                            <button type="button" class="btn btn-danger btn-sm hide" value="" id="rejectBtn">Reject</button>
                         </div>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                             @foreach ($wap_request as $item)
                                 <tr>
                                     <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="">
+                                        <div class="form-check reject_checkbox">
+                                            <input class="form-check-input" type="checkbox" value="{{$item->id}}" id="">
                                         </div>
                                     </td>
                                     <td >{{++$count}}</td>
@@ -91,7 +91,7 @@
                                         <a class="btn btn-primary btn-sm" href="https://wa.me/91{{$item->client_mobile}}?text={{rawurlencode($item->message)}}" target="_blank">Send Msg</a>
                                         {{-- <button type="button" class="btn btn-primary btn-sm sendBtn" value="{{$item->id}}">Send</button> --}}
                                         <button type="button" class="btn btn-primary btn-sm approveBtn" value="{{$item->id}}">Approve</button>
-                                        <button type="button" class="btn btn-danger btn-sm rejectBtn" value="{{$item->id}}">Reject</button>
+                                        <button type="button" class="btn btn-danger btn-sm rejectBtn hide" value="{{$item->id}}">Reject</button>
                                         
                                     </td>
                                     
@@ -337,7 +337,6 @@
             //     $('#updateWapRequestBtn').addClass('hide');
             // });
 
-            
 
             $(document).on('click','.previewBtn', function (e) {
                 e.preventDefault();
@@ -359,19 +358,47 @@
                 approveWapRequest(wap_request_id);
             });
 
-            $(document).on('click','.rejectBtn', function () {
-                const wap_request_id = $(this).val();
-                $('#submitRejectWapRequestBtn').val(wap_request_id);
+            $(document).on('click','#rejectBtn', function () {
+                // const wap_request_id = $(this).val();
+                // $('#rejectWapRequestModal').modal('show');
+                // $('#reject_wap_request_err').html('');
+                // $('#reject_wap_request_err').removeClass('alert alert-danger');
+                // $('#reject_msg').val('');
+                // $('#submitRejectWapRequestBtn').val(wap_request_id);
+
+                var selected_request_id = [];
+                $(".reject_checkbox :checked").each(function() {
+                    selected_request_id.push($(this).val());
+                });
+                if(selected_request_id.length > 0){
+                    $('#rejectBtn').removeClass('hide');
+                }else{
+                    $('#rejectBtn').addClass('hide');
+                }
 
                 $('#rejectWapRequestModal').modal('show');
                 $('#reject_wap_request_err').html('');
                 $('#reject_wap_request_err').removeClass('alert alert-danger');
                 $('#reject_msg').val('');
+                $('#submitRejectWapRequestBtn').val(selected_request_id);
             });
             
             $(document).on('click','#submitRejectWapRequestBtn', function () {
                 const wap_request_id = $(this).val();
                 submitRejectWapRequest(wap_request_id);
+            });
+
+            $(document).on('click','.reject_checkbox', function () {
+                var selected_request_id = [];
+                $(".reject_checkbox :checked").each(function() {
+                    selected_request_id.push($(this).val());
+                });
+                if(selected_request_id.length > 0){
+                    $('#rejectBtn').removeClass('hide');
+                }else{
+                    $('#rejectBtn').addClass('hide');
+                }
+                //alert(selected_request_id);
             });
 
             // $(document).on('click','.editTemplateBtn', function (e) {
@@ -460,7 +487,7 @@
                 contentType: false, 
                 processData: false,
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     if(response.status == 400)
                     {
                         $('#reject_wap_request_err').html('');

@@ -82,6 +82,7 @@ class AdminWapRequestController extends Controller
 
     public function rejectWapRequest(Request $req, $wap_request_id)
     {
+
         $validator = Validator::make($req->all(),[
             'reject_msg' => 'required',
         ]);
@@ -92,15 +93,28 @@ class AdminWapRequestController extends Controller
                 'errors'=>$validator->messages(),
             ]);
         }else{
-            $model = WapRequest::find($wap_request_id) ;
-            $model->reject = MyApp::STATUS;
-            $model->reject_msg = $req->input('reject_msg');
-            // $model->reject_date = date('Y-m-d');
-            // $model->reject_time = date('g:i:s A');
-            $model->save();
+            
+            foreach (explode(',',$wap_request_id) as $key => $id) {
+                $model = WapRequest::find($id) ;
+                $model->reject = MyApp::STATUS;
+                $model->reject_msg = $req->input('reject_msg');
+                // $model->reject_date = date('Y-m-d');
+                // $model->reject_time = date('g:i:s A');
+                $model->save();
+            }
             return response()->json([
                 'status'=>200
             ]);
+
+            // $model = WapRequest::find($wap_request_id) ;
+            // $model->reject = MyApp::STATUS;
+            // $model->reject_msg = $req->input('reject_msg');
+            // // $model->reject_date = date('Y-m-d');
+            // // $model->reject_time = date('g:i:s A');
+            // $model->save();
+            // return response()->json([
+            //     'status'=>200
+            // ]);
         }
     }
 
